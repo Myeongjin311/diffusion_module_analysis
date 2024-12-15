@@ -134,9 +134,6 @@ class UNet2DModel(ModelMixin, ConfigMixin):
 
         self.sample_size = sample_size
         time_embed_dim = block_out_channels[0] * 4
-        with open('info/upblock_types.txt', 'w') as f:
-            f.write(f'down_block_types: {down_block_types} \n')
-            f.write(f'up_block_types: {up_block_types} \n')
         
 
         # Check inputs
@@ -814,9 +811,9 @@ class UNet2DModel(ModelMixin, ConfigMixin):
                 _, ret_freq = fourier_save(sample.sum(dim=1)[0])
 
                 # edge difference
-                if idx == 0:
-                    ret_diff = edge_diff(sample, time_idx=time_idx)
-                    f_info['edge_diff']['down'] = ret_diff
+                # if idx == 0:
+                #     ret_diff = edge_diff(sample, time_idx=time_idx)
+                #     f_info['edge_diff']['down'] = ret_diff
 
             
 
@@ -945,10 +942,10 @@ class UNet2DModel(ModelMixin, ConfigMixin):
                 s_sample_viz = res_samples[-1]
                 _, skip_freq = fourier_save(s_sample_viz.sum(dim=1)[0])
 
-                if idx == 6:
-                    ret_diff, skip_diff = edge_diff(sample, skip_sample=s_sample_viz, time_idx=time_idx)
-                    f_info['edge_diff']['up'] = ret_diff
-                    f_info['edge_diff']['skip'] = skip_diff
+                # if idx == 6:
+                #     ret_diff, skip_diff = edge_diff(sample, skip_sample=s_sample_viz, time_idx=time_idx)
+                #     f_info['edge_diff']['up'] = ret_diff
+                #     f_info['edge_diff']['skip'] = skip_diff
 
             #print('sample shape:', sample.shape)
                     

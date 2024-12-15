@@ -186,8 +186,8 @@ class ScoreSdeVePipeline(DiffusionPipeline):
         low_freq_trackers = dict()
         high_freq_trackers = dict()
 
-        edge_diffs = defaultdict(list)
-        current_edge_diffs = defaultdict(list)
+        # edge_diffs = defaultdict(list)
+        # current_edge_diffs = defaultdict(list)
         for i in range(7):
             low_freq_trackers[f'depth_{i}'] = defaultdict(list)
             high_freq_trackers[f'depth_{i}'] = defaultdict(list)
@@ -386,15 +386,15 @@ class ScoreSdeVePipeline(DiffusionPipeline):
                     high_freq_trackers[f'depth_{idx}']['up'].append(f_info['high'][f'depth_{idx}']['up'])
 
             # edge diff tracker
-            edge_diffs['down'].append(f_info['edge_diff']['down'])
-            edge_diffs['skip'].append(f_info['edge_diff']['skip'])
-            edge_diffs['up'].append(f_info['edge_diff']['up'])
+            # edge_diffs['down'].append(f_info['edge_diff']['down'])
+            # edge_diffs['skip'].append(f_info['edge_diff']['skip'])
+            # edge_diffs['up'].append(f_info['edge_diff']['up'])
 
             # current edge diff tracker
-            if fmap_pth_:
-                current_edge_diffs['down'].append(f_info['current_edge_diff']['down'])
-                current_edge_diffs['skip'].append(f_info['current_edge_diff']['skip'])
-                current_edge_diffs['up'].append(f_info['current_edge_diff']['up'])
+            # if fmap_pth_:
+            #     current_edge_diffs['down'].append(f_info['current_edge_diff']['down'])
+            #     current_edge_diffs['skip'].append(f_info['current_edge_diff']['skip'])
+            #     current_edge_diffs['up'].append(f_info['current_edge_diff']['up'])
 
             
             output, predicted, noise = self.scheduler.step_pred(model_output, t, sample, generator=generator)
@@ -459,13 +459,13 @@ class ScoreSdeVePipeline(DiffusionPipeline):
         os.makedirs(edge_pth, exist_ok=True)
         
         # edge diff plot
-        timesteps = range(num_inference_steps)
-        plt.plot(timesteps, edge_diffs['down'], label='down')
-        plt.plot(timesteps, edge_diffs['skip'], label='skip')
-        plt.plot(timesteps, edge_diffs['up'], label='up')
-        plt.legend()
-        plt.tight_layout()
-        plt.savefig(os.path.join(edge_pth, 'edge_diff.png'))
+        # timesteps = range(num_inference_steps)
+        # plt.plot(timesteps, edge_diffs['down'], label='down')
+        # plt.plot(timesteps, edge_diffs['skip'], label='skip')
+        # plt.plot(timesteps, edge_diffs['up'], label='up')
+        # plt.legend()
+        # plt.tight_layout()
+        # plt.savefig(os.path.join(edge_pth, 'edge_diff.png'))
 
         
         if feature_map_viz:
@@ -501,14 +501,14 @@ class ScoreSdeVePipeline(DiffusionPipeline):
 
             
             # current edge diff plot
-            current_timesteps = range(t_unit, num_inference_steps+1, t_unit)
-            plt.plot(current_timesteps, current_edge_diffs['down'], label='down')
-            plt.plot(current_timesteps, current_edge_diffs['skip'], label='skip')
-            plt.plot(current_timesteps, current_edge_diffs['up'], label='up')
+            # current_timesteps = range(t_unit, num_inference_steps+1, t_unit)
+            # plt.plot(current_timesteps, current_edge_diffs['down'], label='down')
+            # plt.plot(current_timesteps, current_edge_diffs['skip'], label='skip')
+            # plt.plot(current_timesteps, current_edge_diffs['up'], label='up')
 
-            plt.legend()
-            plt.tight_layout()
-            plt.savefig(os.path.join(edge_pth, 'current_edge_diff.png'))
+            # plt.legend()
+            # plt.tight_layout()
+            # plt.savefig(os.path.join(edge_pth, 'current_edge_diff.png'))
         
         # total_s = torch.cat(total_s_list, dim=-1)
         # total_b = torch.cat(total_b_list, dim=-1)
