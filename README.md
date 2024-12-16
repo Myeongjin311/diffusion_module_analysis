@@ -6,6 +6,16 @@ This repository aims to analyze the roles of each block in the UNet architecture
 
 ```
 python run_ve.py
+
+
+python run_ve.py --seed 10 --bsize 4 \
+            --is_save --num_steps 400 \
+            --t_start_idx 3 \ # We divide the entire time steps into 10 segments and this arugment indicates from which segment the scaling begins
+            --duration 2 \ # The duration for which scaling will be applied, e.g., 0.7T ~ 0.5T (T: the entire time steps)
+            -down_ids 0 \ # Down block ID to which scaling will be applied (ranging from 0 to 7 in the case of the VE model)
+            -skip_ids 6 \ # Skip block ID to which scaling will be applied (ranging from 0 to 7 in the case of the VE model)
+            -up_ids 6 \ # Up block ID to which scaling will be applied (ranging from 0 to 7 in the case of the VE model)
+            --scales 1 1 2 # Scale factors for (down block, skip block, up block) 
 ```
 
 
